@@ -17,8 +17,9 @@
       --secondary-color: #ff7adf;
       --accent-color: #00f0ff;
       --text-color: #fff;
-      --card-bg-light: rgba(255, 255, 255, 0.08);
-      --card-bg-dark: rgba(255, 255, 255, 0.04);
+      /* Eliminamos los fondos de tarjeta para que el texto esté directo sobre la imagen */
+      /* --card-bg-light: rgba(255, 255, 255, 0.08); */
+      /* --card-bg-dark: rgba(255, 255, 255, 0.04); */
       --shadow-pink: rgba(255, 0, 150, 0.45);
       --shadow-blue: rgba(0, 240, 255, 0.8);
       --font-poppins: 'Poppins', sans-serif;
@@ -63,13 +64,14 @@
       margin: 0 auto;
       border-radius: 28px; /* Borde más suave */
       padding: 30px 25px 40px;
-      background: var(--card-bg-light);
-      backdrop-filter: blur(8px); /* Blur un poco más fuerte */
-      box-shadow: 0 0 45px var(--shadow-pink); /* Sombra más pronunciada */
+      /* Eliminamos el fondo y el backdrop-filter para que el contenido sea transparente */
+      background: transparent; /* Fondo transparente */
+      backdrop-filter: none; /* Sin blur */
+      box-shadow: none; /* Sin sombra en la tarjeta principal, los textos tendrán su propia sombra */
       animation: fadeIn 1.5s ease-out forwards; /* forwards para mantener el estado final */
       position: relative;
       z-index: 2;
-      border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+      border: none; /* Sin borde */
     }
 
     @keyframes fadeIn {
@@ -87,7 +89,7 @@
       font-size: 2.8rem; /* Tamaño más grande */
       font-weight: 400; /* Pacifico no necesita tanto weight */
       color: var(--secondary-color);
-      text-shadow: 0 0 18px var(--primary-color);
+      text-shadow: 0 0 18px var(--primary-color), 0 0 10px rgba(0,0,0,0.8); /* Sombra para mejor legibilidad */
       line-height: 1.2;
     }
 
@@ -95,13 +97,14 @@
       margin-top: 8px;
       font-size: 1.15rem;
       color: rgba(255, 255, 255, 0.9);
+      text-shadow: 0 0 8px rgba(0,0,0,0.7); /* Sombra para mejor legibilidad */
     }
 
     .age {
       font-size: 5rem; /* Edad más grande */
       font-weight: 700;
       margin: 15px 0 5px;
-      text-shadow: 0 0 20px var(--accent-color), 0 0 40px var(--primary-color);
+      text-shadow: 0 0 20px var(--accent-color), 0 0 40px var(--primary-color), 0 0 15px rgba(0,0,0,0.9); /* Sombra para mejor legibilidad */
       letter-spacing: 2px;
     }
 
@@ -119,7 +122,7 @@
       font-size: 1.35rem;
       margin-bottom: 12px;
       color: var(--accent-color);
-      text-shadow: 0 0 12px var(--shadow-blue);
+      text-shadow: 0 0 12px var(--shadow-blue), 0 0 8px rgba(0,0,0,0.7); /* Sombra para mejor legibilidad */
       display: flex;
       align-items: center;
       gap: 10px;
@@ -132,7 +135,7 @@
     section p, .detail-item {
       font-size: 1rem;
       line-height: 1.6;
-      text-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.9); /* Sombra para mejor legibilidad */
       margin-bottom: 8px;
     }
     
@@ -189,54 +192,7 @@
       margin-top: 40px;
       font-size: 0.8rem;
       opacity: 0.7;
-      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    }
-
-    /* Estilos para el confeti */
-    .confetti {
-        position: absolute;
-        width: 10px;
-        height: 10px;
-        background-color: var(--primary-color); /* Color base del confeti */
-        opacity: 0;
-        border-radius: 50%;
-        animation: confetti-fall 4s ease-out forwards;
-        pointer-events: none; /* Para que no interfiera con clics */
-        z-index: 10; /* Por encima de todo */
-    }
-
-    @keyframes confetti-fall {
-        0% { transform: translateY(-100px) rotateZ(0deg) scale(0); opacity: 0; }
-        10% { opacity: 1; transform: scale(1); }
-        100% { transform: translateY(100vh) rotateZ(720deg) scale(0.5); opacity: 0; }
-    }
-
-    /* Media Queries para responsividad */
-    @media (max-width: 480px) {
-      .card {
-        padding: 25px 18px 30px;
-        border-radius: 20px;
-      }
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-      .hero p {
-        font-size: 1rem;
-      }
-      .age {
-        font-size: 4rem;
-        margin: 10px 0 5px;
-      }
-      section h2 {
-        font-size: 1.15rem;
-      }
-      section p, .detail-item {
-        font-size: 0.95rem;
-      }
-      .btn {
-        padding: 14px;
-        font-size: 0.95rem;
-      }
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.8); /* Sombra para mejor legibilidad */
     }
   </style>
 </head>
@@ -315,30 +271,38 @@
       }
     }
 
-    // Efecto de Confeti
-    function createConfetti() {
-      const confettiCount = 50;
-      const colors = ['#ff2fb2', '#ff7adf', '#00f0ff', '#f8d210', '#fff'];
+    // Función para el efecto de confeti
+    function triggerConfetti() {
+        const confettiScript = document.createElement('script');
+        confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+        document.body.appendChild(confettiScript);
 
-      for (let i = 0; i < confettiCount; i++) {
-        const confetti = document.createElement('div');
-        confetti.classList.add('confetti');
-        confetti.style.left = Math.random() * 100 + 'vw';
-        confetti.style.animationDelay = Math.random() * 2 + 's';
-        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
-        confetti.style.transform = `rotateZ(${Math.random() * 360}deg)`; // Rotación inicial aleatoria
-        document.body.appendChild(confetti);
+        confettiScript.onload = () => {
+            const end = Date.now() + 2 * 1000; // Duración del confeti en ms
 
-        // Remover confeti después de su animación para evitar acumulación
-        confetti.addEventListener('animationend', () => {
-          confetti.remove();
-        });
-      }
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 } // Desde la izquierda
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 } // Desde la derecha
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            }());
+        };
     }
 
-    // Disparar confeti al cargar y al confirmar asistencia (opcional)
-    document.addEventListener('DOMContentLoaded', createConfetti);
-    // Podrías llamar a createConfetti() también en la función de confirmar asistencia si quieres un efecto al hacer clic.
+    // Disparar confeti al cargar la página
+    document.addEventListener('DOMContentLoaded', triggerConfetti);
   </script>
 
 </body>
