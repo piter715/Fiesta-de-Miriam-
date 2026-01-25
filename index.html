@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎉 Invitación de Cumpleaños - Miriam 🎉</title>
+
+  <!-- Google Fonts: Poppins para texto principal, y una de display para títulos -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Pacifico&display=swap" rel="stylesheet">
+  <!-- Font Awesome para íconos -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /* Variables CSS */
+    :root {
+      --primary-color: #ff2fb2;
+      --secondary-color: #ff7adf;
+      --accent-color: #00f0ff;
+      --text-color: #fff;
+      --card-bg-light: rgba(255, 255, 255, 0.08);
+      --card-bg-dark: rgba(255, 255, 255, 0.04);
+      --shadow-pink: rgba(255, 0, 150, 0.45);
+      --shadow-blue: rgba(0, 240, 255, 0.8);
+      --font-poppins: 'Poppins', sans-serif;
+      --font-pacifico: 'Pacifico', cursive; /* Fuente para títulos */
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: var(--font-poppins);
+    }
+
+    body {
+      min-height: 100vh;
+      background: url('https://i.ibb.co/PGhMzDYd/f77e93006bf816b83649efca453fe68b.jpg') no-repeat center center/cover fixed; /* fixed para mejor scroll */
+      color: var(--text-color);
+      overflow-x: hidden;
+      display: flex; /* Para centrar el contenido verticalmente */
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .overlay {
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.8));
+      min-height: 100vh;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px 15px 40px;
+    }
+
+    .card {
+      max-width: 450px; /* Un poco más grande */
+      width: 100%;
+      margin: 0 auto;
+      border-radius: 28px; /* Borde más suave */
+      padding: 30px 25px 40px;
+      background: var(--card-bg-light);
+      backdrop-filter: blur(8px); /* Blur un poco más fuerte */
+      box-shadow: 0 0 45px var(--shadow-pink); /* Sombra más pronunciada */
+      animation: fadeIn 1.5s ease-out forwards; /* forwards para mantener el estado final */
+      position: relative;
+      z-index: 2;
+      border: 1px solid rgba(255, 255, 255, 0.2); /* Borde sutil */
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      font-family: var(--font-pacifico); /* Fuente cursiva para el título */
+      font-size: 2.8rem; /* Tamaño más grande */
+      font-weight: 400; /* Pacifico no necesita tanto weight */
+      color: var(--secondary-color);
+      text-shadow: 0 0 18px var(--primary-color);
+      line-height: 1.2;
+    }
+
+    .hero p {
+      margin-top: 8px;
+      font-size: 1.15rem;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .age {
+      font-size: 5rem; /* Edad más grande */
+      font-weight: 700;
+      margin: 15px 0 5px;
+      text-shadow: 0 0 20px var(--accent-color), 0 0 40px var(--primary-color);
+      letter-spacing: 2px;
+    }
+
+    section {
+      margin-top: 35px;
+      padding: 15px 0;
+      border-top: 1px dashed rgba(255, 255, 255, 0.3); /* Separador sutil */
+    }
+
+    section:last-of-type {
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
+    }
+
+    section h2 {
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+      color: var(--accent-color);
+      text-shadow: 0 0 12px var(--shadow-blue);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    section h2 i {
+      color: var(--secondary-color);
+    }
+
+    section p, .detail-item {
+      font-size: 1rem;
+      line-height: 1.6;
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+      margin-bottom: 8px;
+    }
+    
+    .detail-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .detail-item span {
+      font-weight: 600;
+      color: #ffb3ec;
+      margin-right: 5px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 40px;
+    }
+
+    .btn {
+      text-align: center;
+      padding: 16px;
+      border-radius: 35px; /* Bordes más redondeados */
+      font-size: 1.05rem;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--text-color);
+      background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+      box-shadow: 0 0 25px rgba(255, 47, 178, 0.75);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px) scale(1.02); /* Efecto 3D sutil */
+      box-shadow: 0 8px 30px rgba(255, 47, 178, 0.9);
+    }
+
+    .music-btn {
+      background: linear-gradient(135deg, #0093E9, #80D0C7); /* Degradado más vibrante */
+      box-shadow: 0 0 25px rgba(0, 198, 255, 0.7);
+    }
+
+    .music-btn:hover {
+      box-shadow: 0 8px 30px rgba(0, 198, 255, 0.9);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.8rem;
+      opacity: 0.7;
+      text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Estilos para el confeti */
+    .confetti {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: var(--primary-color); /* Color base del confeti */
+        opacity: 0;
+        border-radius: 50%;
+        animation: confetti-fall 4s ease-out forwards;
+        pointer-events: none; /* Para que no interfiera con clics */
+        z-index: 10; /* Por encima de todo */
+    }
+
+    @keyframes confetti-fall {
+        0% { transform: translateY(-100px) rotateZ(0deg) scale(0); opacity: 0; }
+        10% { opacity: 1; transform: scale(1); }
+        100% { transform: translateY(100vh) rotateZ(720deg) scale(0.5); opacity: 0; }
+    }
+
+    /* Media Queries para responsividad */
+    @media (max-width: 480px) {
+      .card {
+        padding: 25px 18px 30px;
+        border-radius: 20px;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero p {
+        font-size: 1rem;
+      }
+      .age {
+        font-size: 4rem;
+        margin: 10px 0 5px;
+      }
+      section h2 {
+        font-size: 1.15rem;
+      }
+      section p, .detail-item {
+        font-size: 0.95rem;
+      }
+      .btn {
+        padding: 14px;
+        font-size: 0.95rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Música de fondo -->
+  <audio id="music" loop>
+    <source src="https://www.dropbox.com/scl/fi/1u1ilabrd1s4o7ym8t45p/Cancion-50-sombras-de-grey.mp3?rlkey=wokzcqk7ee0g22j28nm22jnen&st=leulbetj&dl=1" type="audio/mpeg">
+    Tu navegador no soporta el elemento de audio.
+  </audio>
+
+  <div class="overlay">
+    <div class="card">
+
+      <header class="hero">
+        <h1>¡Estás Invitado!</h1>
+        <p>A la fiesta de cumpleaños de Miriam López</p>
+        <div class="age">24</div>
+        <p>años</p>
+      </header>
+
+      <main>
+        <section aria-labelledby="invitation-heading">
+          <h2 id="invitation-heading"><i class="fas fa-gift"></i> Celebrando a</h2>
+          <p><strong>Miriam</strong> te extiende una cálida invitación para celebrar un día muy especial.</p>
+        </section>
+
+        <section aria-labelledby="details-heading">
+          <h2 id="details-heading"><i class="fas fa-calendar-alt"></i> Detalles del Evento</h2>
+          <div class="detail-item"><span><i class="far fa-calendar-alt"></i> Fecha:</span> Sábado 14 de febrero</div>
+          <div class="detail-item"><span><i class="far fa-clock"></i> Hora:</span> 3:00 de la tarde</div>
+          <div class="detail-item"><span><i class="fas fa-map-marker-alt"></i> Lugar:</span> Mi casa, frente al campo de fútbol</div>
+        </section>
+
+        <section aria-labelledby="message-heading">
+          <h2 id="message-heading"><i class="fas fa-comment-dots"></i> Mensaje para ti</h2>
+          <p>No faltes, será un gusto enorme compartir este momento contigo y crear recuerdos inolvidables. ¡Te esperamos con mucho cariño! 💖</p>
+        </section>
+      </main>
+
+      <div class="buttons">
+        <a class="btn"
+           href="https://wa.me/523227798538?text=Hola%2C%20confirmo%20mi%20asistencia%20a%20tu%20cumplea%C3%B1os%20Miriam!"
+           target="_blank"
+           aria-label="Confirmar asistencia vía WhatsApp">
+          <i class="fab fa-whatsapp"></i> Confirmar Asistencia
+        </a>
+
+        <button class="btn music-btn" onclick="toggleMusic()" aria-label="Reproducir o pausar música de fondo">
+          <i class="fas fa-music"></i> <span id="music-button-text">Reproducir Música</span>
+        </button>
+      </div>
+
+      <footer>
+        Hecho con <i class="fas fa-heart"></i> para Miriam · Invitación Digital
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    const music = document.getElementById('music');
+    const musicButtonText = document.getElementById('music-button-text');
+    let playing = false;
+
+    function toggleMusic() {
+      if (!playing) {
+        music.play();
+        playing = true;
+        musicButtonText.textContent = 'Pausar Música';
+      } else {
+        music.pause();
+        playing = false;
+        musicButtonText.textContent = 'Reproducir Música';
+      }
+    }
+
+    // Efecto de Confeti
+    function createConfetti() {
+      const confettiCount = 50;
+      const colors = ['#ff2fb2', '#ff7adf', '#00f0ff', '#f8d210', '#fff'];
+
+      for (let i = 0; i < confettiCount; i++) {
+        const confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDelay = Math.random() * 2 + 's';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.transform = `rotateZ(${Math.random() * 360}deg)`; // Rotación inicial aleatoria
+        document.body.appendChild(confetti);
+
+        // Remover confeti después de su animación para evitar acumulación
+        confetti.addEventListener('animationend', () => {
+          confetti.remove();
+        });
+      }
+    }
+
+    // Disparar confeti al cargar y al confirmar asistencia (opcional)
+    document.addEventListener('DOMContentLoaded', createConfetti);
+    // Podrías llamar a createConfetti() también en la función de confirmar asistencia si quieres un efecto al hacer clic.
+  </script>
+
+</body>
+</html>
