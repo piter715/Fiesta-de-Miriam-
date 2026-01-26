@@ -1,3 +1,5 @@
+--- START OF FILE index.html ---
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -91,6 +93,13 @@
       color: var(--secondary-color);
       text-shadow: 0 0 18px var(--primary-color), 0 0 10px rgba(0,0,0,0.8); /* Sombra para mejor legibilidad */
       line-height: 1.2;
+      animation: textGlowPinkBlue 3s ease-in-out infinite alternate; /* Animación de brillo */
+    }
+
+    @keyframes textGlowPinkBlue {
+        0% { text-shadow: 0 0 18px var(--primary-color), 0 0 10px rgba(0,0,0,0.8); }
+        50% { text-shadow: 0 0 22px var(--accent-color), 0 0 12px rgba(0,0,0,0.9); }
+        100% { text-shadow: 0 0 18px var(--primary-color), 0 0 10px rgba(0,0,0,0.8); }
     }
 
     .hero p {
@@ -106,13 +115,33 @@
       margin: 15px 0 5px;
       text-shadow: 0 0 20px var(--accent-color), 0 0 40px var(--primary-color), 0 0 15px rgba(0,0,0,0.9); /* Sombra para mejor legibilidad */
       letter-spacing: 2px;
+      animation: pulse 2s infinite alternate, textGlowPinkBlue 3s ease-in-out infinite alternate; /* Pulse y brillo */
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.05); }
     }
 
     section {
       margin-top: 35px;
       padding: 15px 0;
       border-top: 1px dashed rgba(255, 255, 255, 0.3); /* Separador sutil */
+      opacity: 0; /* Inicialmente oculto */
+      transform: translateY(20px); /* Ligeramente desplazado */
+      animation: sectionSlideIn 0.8s ease-out forwards;
     }
+
+    /* Retrasos para las secciones */
+    section:nth-of-type(1) { animation-delay: 1.8s; }
+    section:nth-of-type(2) { animation-delay: 2.3s; }
+    section:nth-of-type(3) { animation-delay: 2.8s; }
+
+
+    @keyframes sectionSlideIn {
+        to { opacity: 1; transform: translateY(0); }
+    }
+
 
     section:last-of-type {
       border-bottom: 1px dashed rgba(255, 255, 255, 0.3);
@@ -126,6 +155,7 @@
       display: flex;
       align-items: center;
       gap: 10px;
+      animation: textGlowPinkBlue 3s ease-in-out infinite alternate; /* Animación de brillo */
     }
 
     section h2 i {
@@ -154,6 +184,10 @@
       flex-direction: column;
       gap: 18px;
       margin-top: 40px;
+      opacity: 0; /* Inicialmente oculto */
+      transform: translateY(20px); /* Ligeramente desplazado */
+      animation: sectionSlideIn 0.8s ease-out forwards;
+      animation-delay: 3.3s; /* Retraso para los botones */
     }
 
     .btn {
@@ -166,7 +200,7 @@
       color: var(--text-color);
       background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
       box-shadow: 0 0 25px rgba(255, 47, 178, 0.75);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease; /* Añadido background */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -174,8 +208,9 @@
     }
 
     .btn:hover {
-      transform: translateY(-3px) scale(1.02); /* Efecto 3D sutil */
-      box-shadow: 0 8px 30px rgba(255, 47, 178, 0.9);
+      transform: translateY(-5px) scale(1.02); /* Efecto 3D sutil más pronunciado */
+      box-shadow: 0 10px 35px rgba(255, 47, 178, 0.95); /* Sombra más grande y brillante */
+      background: linear-gradient(135deg, var(--secondary-color), var(--primary-color)); /* Invertir degradado */
     }
 
     .music-btn {
@@ -184,7 +219,8 @@
     }
 
     .music-btn:hover {
-      box-shadow: 0 8px 30px rgba(0, 198, 255, 0.9);
+      box-shadow: 0 10px 35px rgba(0, 198, 255, 0.95);
+      background: linear-gradient(135deg, #80D0C7, #0093E9); /* Invertir degradado */
     }
 
     footer {
@@ -258,6 +294,21 @@
     const music = document.getElementById('music');
     const musicButtonText = document.getElementById('music-button-text');
     let playing = false;
+    let confettiLoaded = false; // Variable para saber si la librería de confeti ya cargó
+
+    // Cargar la librería de confeti una sola vez
+    function loadConfettiScript() {
+        if (!confettiLoaded) {
+            const confettiScript = document.createElement('script');
+            confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
+            confettiScript.onload = () => {
+                confettiLoaded = true;
+                // Disparar confeti inicial al cargar, si es necesario
+                // triggerConfettiOnLoad(); // Si quieres mantener el confeti inicial al cargar
+            };
+            document.body.appendChild(confettiScript);
+        }
+    }
 
     function toggleMusic() {
       if (!playing) {
@@ -271,38 +322,59 @@
       }
     }
 
-    // Función para el efecto de confeti
-    function triggerConfetti() {
-        const confettiScript = document.createElement('script');
-        confettiScript.src = 'https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js';
-        document.body.appendChild(confettiScript);
+    // Función para el efecto de confeti en la posición del toque/clic
+    function triggerConfettiAtPoint(x, y) {
+        if (!confettiLoaded || !window.confetti) {
+            console.warn("Librería de confeti no cargada.");
+            return;
+        }
 
-        confettiScript.onload = () => {
-            const end = Date.now() + 2 * 1000; // Duración del confeti en ms
+        // Convertir coordenadas del evento a un porcentaje de la ventana
+        const originX = x / window.innerWidth;
+        const originY = y / window.innerHeight;
 
-            (function frame() {
-                confetti({
-                    particleCount: 5,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 } // Desde la izquierda
-                });
-                confetti({
-                    particleCount: 5,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 } // Desde la derecha
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
-        };
+        window.confetti({
+            particleCount: 25, // Un poco menos de partículas por toque
+            spread: 80, // Área de dispersión
+            startVelocity: 30, // Velocidad inicial
+            origin: { x: originX, y: originY },
+            colors: ['#ff2fb2', '#ff7adf', '#00f0ff', '#ffffff'],
+            scalar: 0.8, // Tamaño del confeti
+            disableForReducedMotion: true // Deshabilitar si el usuario tiene preferencias de movimiento reducido
+        });
     }
 
-    // Disparar confeti al cargar la página
-    document.addEventListener('DOMContentLoaded', triggerConfetti);
+    // Event listener para toda la pantalla
+    document.addEventListener('click', (e) => {
+        triggerConfettiAtPoint(e.clientX, e.clientY);
+    });
+
+    document.addEventListener('touchstart', (e) => {
+        // Para evitar que se dispare confeti dos veces en dispositivos táctiles (click + touchstart)
+        // Solo respondemos al primer toque si hay múltiples dedos
+        if (e.touches.length > 0) {
+            triggerConfettiAtPoint(e.touches[0].clientX, e.touches[0].clientY);
+        }
+    });
+
+    // Cargar el script de confeti al cargar la página
+    document.addEventListener('DOMContentLoaded', loadConfettiScript);
+
+    // Opcional: Si quieres un confeti inicial al cargar la página (como antes)
+    // function triggerConfettiOnLoad() {
+    //     if (!confettiLoaded || !window.confetti) {
+    //         // Intentar de nuevo si no ha cargado aún
+    //         setTimeout(triggerConfettiOnLoad, 100);
+    //         return;
+    //     }
+    //     const end = Date.now() + 1.5 * 1000; // Duración del confeti en ms
+    //     (function frame() {
+    //         confetti({ particleCount: 5, angle: 60, spread: 55, origin: { x: 0 }, colors: ['#ff2fb2', '#ff7adf', '#00f0ff', '#ffffff'] });
+    //         confetti({ particleCount: 5, angle: 120, spread: 55, origin: { x: 1 }, colors: ['#ff2fb2', '#ff7adf', '#00f0ff', '#ffffff'] });
+    //         if (Date.now() < end) { requestAnimationFrame(frame); }
+    //     }());
+    // }
+    // document.addEventListener('DOMContentLoaded', triggerConfettiOnLoad); // Descomenta esta línea si quieres confeti al cargar
   </script>
 
 </body>
